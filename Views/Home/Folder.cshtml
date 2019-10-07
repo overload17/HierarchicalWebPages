@@ -1,0 +1,16 @@
+﻿@model HierarchicalWebApplication.Models.Folder
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="col-lg-12">
+    <h1>Folder: @Model.Name</h1>
+</div>
+
+@foreach (var item in Model.Children)
+{
+    <div class="row">
+        @Html.ActionLink(item.Name, "Folder", new { path = $"{Model.Name}/{item.Name}"})
+    </div>
+}
