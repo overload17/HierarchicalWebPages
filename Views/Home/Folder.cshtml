@@ -1,4 +1,5 @@
-﻿@model HierarchicalWebApplication.Models.Folder
+﻿@using HierarchicalWebApplication.Models
+@model HierarchicalWebApplication.Models.Folder
 
 @{
     ViewBag.Title = "Home Page";
@@ -8,9 +9,27 @@
     <h1>Folder: @Model.Name</h1>
 </div>
 
-@foreach (var item in Model.Children)
+@if (Model.Children.Any())
 {
-    <div class="row">
-        @Html.ActionLink(item.Name, "Folder", new { path = $"{Model.Name}/{item.Name}"})
-    </div>
+    foreach (var item in Model.Children)
+    {
+        var parentNodes = new List<string>();
+        ParseNodes(item, parentNodes);
+        parentNodes.Reverse();
+
+        <div class="row">
+            @Html.ActionLink(item.Name, "Folder", new { path = $"{string.Join("/", parentNodes)}/{item.Name}" })
+        </div>
+    }
+}
+
+@functions {
+    public static void ParseNodes(Folder folder, List<string> result)
+    {
+        if (folder.Parent != null)
+        {
+            result.Add(folder.Parent.Name);
+            ParseNodes(folder.Parent, result);
+        }
+    }
 }

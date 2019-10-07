@@ -18,7 +18,7 @@ namespace HierarchicalWebApplication.Controllers
                 path = path.Substring(lastSlash + 1);
             }
 
-            var viewModel = string.IsNullOrEmpty(path) ? _dbContext.Folders.First() : _dbContext.Folders.FirstOrDefault(f => f.Name == path);
+            var viewModel = _dbContext.Folders.FirstOrDefault(f => f.Name == path);
             return View(viewModel);
         }
     }
