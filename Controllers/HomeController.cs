@@ -12,7 +12,7 @@ namespace HierarchicalWebApplication.Controllers
         {
             if (string.IsNullOrEmpty(path))
             {
-                return RedirectToAction("Folder", "Home", new {path = "Creating Digital Images" });
+                return RedirectToAction("Folder", "Home", new {path = _dbContext.Folders.FirstOrDefault(f => f.Parent == null).Name });
             }
 
             path = path.TrimEnd('/');
