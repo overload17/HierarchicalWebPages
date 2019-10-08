@@ -10,6 +10,11 @@ namespace HierarchicalWebApplication.Controllers
         
         public ActionResult Folder(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return RedirectToAction("Folder", "Home", new {path = "Creating Digital Images" });
+            }
+
             path = path.TrimEnd('/');
 
             int lastSlash = path.LastIndexOf('/');
